@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ABPS_WEB.Api/ABPS_WEB.Api.csproj" />
+    <Project Path="src/ABPS_WEB.Domain/ABPS_WEB.Domain.csproj" />
+    <Project Path="src/ABPS_WEB.Infrastructure/ABPS_WEB.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ABPS_WEB.Domain.Tests/ABPS_WEB.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

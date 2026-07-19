@@ -1,0 +1,21 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+appsettings.Development.json
+appsettings.Local.json
+
+# Node / React client
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+
+# Test artifacts
+test-results/
+playwright-report/
