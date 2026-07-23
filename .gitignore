@@ -5,6 +5,8 @@ obj/
 .vs/
 appsettings.Development.json
 appsettings.Local.json
+appsettings.Production.json
+publish/
 
 # Node / React client
 node_modules/
@@ -19,3 +21,6 @@ dist-ssr/
 # Test artifacts
 test-results/
 playwright-report/
+
+# Deploy archives (may contain appsettings.Production.json with real secrets)
+*.zip

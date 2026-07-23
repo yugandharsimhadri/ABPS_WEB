@@ -19,6 +19,7 @@ using ABPS_WEB.Infrastructure.Notifications;
 using ABPS_WEB.Infrastructure.Reports;
 using ABPS_WEB.Infrastructure.RoomOps;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -86,7 +87,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    // In production the API sits behind a reverse proxy / tunnel (Cloudflare) that terminates
+    // TLS and forwards plain HTTP to Kestrel on the local server. Trust its X-Forwarded-* headers
+    // so the app sees the original scheme/host instead of trying to redirect http->https itself,
+    // which would otherwise loop since Kestrel has no local HTTPS endpoint configured here.
+    var forwardedHeaderOptions = new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+    };
+    // Defaults to trusting only loopback proxies; the tunnel/reverse proxy in front of this
+    // API is not loopback, so its known-networks/proxies list must be cleared for the
+    // X-Forwarded-* headers it sends to be honored at all.
+    forwardedHeaderOptions.KnownNetworks.Clear();
+    forwardedHeaderOptions.KnownProxies.Clear();
+    app.UseForwardedHeaders(forwardedHeaderOptions);
+}
+else
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseCors();
 
