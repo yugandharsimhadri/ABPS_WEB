@@ -7,4 +7,7 @@
   <Folder Name="/tests/">
     <Project Path="tests/ABPS_WEB.Domain.Tests/ABPS_WEB.Domain.Tests.csproj" />
   </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/ABPS_WEB.DataMigrator/ABPS_WEB.DataMigrator.csproj" />
+  </Folder>
 </Solution>

@@ -2,15 +2,15 @@ using ABPS_WEB.Domain.AdvanceBooking;
 using ABPS_WEB.Domain.Reports;
 using ABPS_WEB.Domain.RoomOps;
 using ABPS_WEB.Infrastructure.Data;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ABPS_WEB.Infrastructure.Reports;
 
 /// <summary>Ported from ABPS_WPF's Controllers/ReportController.cs — see IReportService.cs for
-/// the two confirmed-dead methods deliberately not ported. Every SqlException-timeout catch
-/// (ex.Number == -2, the 3-minute "shorten your date range" message) is preserved exactly —
+/// the two confirmed-dead methods deliberately not ported. Every query-timeout catch (originally
+/// SqlException -2 on SQL Server, now IsTimeout on PostgreSQL; the 3-minute "shorten your date range" message) is preserved —
 /// these reports have no fixed date range and can span years of data.</summary>
 public class ReportService : IReportService
 {
@@ -25,6 +25,11 @@ public class ReportService : IReportService
 
     private static TimeoutException Timeout() => new(
         "This search is beyond the execution time limit (3 minutes). Please shorten your date range or add more filters, then try again.");
+
+    /// <summary>Npgsql signals a client-side command timeout as an NpgsqlException wrapping a
+    /// TimeoutException; a server-side cancellation (statement_timeout) is SQLSTATE 57014.</summary>
+    private static bool IsTimeout(NpgsqlException ex) =>
+        ex.InnerException is TimeoutException || ex is PostgresException { SqlState: "57014" };
 
     public async Task<List<DonationReportVM>> GetDonationReportAsync(DateTime fromDate, DateTime toDate)
     {
@@ -56,7 +61,7 @@ public class ReportService : IReportService
                               CreatedBy = donation.CreatedBy
                           }).OrderByDescending(x => x.DonationDate).ToListAsync();
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in GetDonationReport");
             throw Timeout();
@@ -124,7 +129,7 @@ public class ReportService : IReportService
                 CreatedTimestamp = a.CreatedTimestamp
             }).ToList();
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in GetAdvanceBookingReport");
             throw Timeout();
@@ -188,7 +193,7 @@ public class ReportService : IReportService
                 .ThenBy(x => x.DateBooking)
                 .ToList();
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in GetBookingReport");
             throw Timeout();
@@ -278,7 +283,7 @@ public class ReportService : IReportService
                     BookingId = r.RoomStatusId == (int)RoomStatus.Occupied ? r.BookingId : 0
                 }).ToListAsync();
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in GetRoomReport");
             throw Timeout();
@@ -376,7 +381,7 @@ public class ReportService : IReportService
 
             return datasource;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getTransactionReport");
             throw Timeout();
@@ -426,7 +431,7 @@ public class ReportService : IReportService
             datasource.Add(new TransactionSummaryDayWise { Date = null, Category = "Net Total", Type = "", TotalTransactions = datasource.Sum(x => x.TotalTransactions), TotalAmount = netTotal });
             return datasource;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getTransactionDaySummary");
             throw Timeout();
@@ -475,7 +480,7 @@ public class ReportService : IReportService
             datasource.Add(new TransactionSummaryDayCategory { Date = null, GroupName = "Net Total", TotalTransactions = totalTransactions, TotalAmount = netTotal });
             return datasource;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getTransactionDaySummary with groupby");
             throw Timeout();
@@ -529,7 +534,7 @@ public class ReportService : IReportService
             datasource.Add(new TransactionSummaryMonthWise { Year = 0, Month = 0, MonthName = "", Category = "Net Total", Type = "", TotalTransactions = datasource.Sum(x => x.TotalTransactions), TotalAmount = netTotal });
             return datasource;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getTransactionMonthSummary");
             throw Timeout();
@@ -581,7 +586,7 @@ public class ReportService : IReportService
             result.Add(new TransactionSummaryMonthCategory { Year = 0, Month = 0, MonthName = "", GroupName = "Net Total", TotalTransactions = result.Sum(x => x.TotalTransactions), TotalAmount = netTotal });
             return result;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getTransactionMonthSummary with groupby");
             throw Timeout();
@@ -619,7 +624,7 @@ public class ReportService : IReportService
                 .OrderBy(x => x.ExpectedCheckoutDate)
                 .ToListAsync();
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getExpiringBookingReport");
             throw Timeout();
@@ -717,7 +722,7 @@ public class ReportService : IReportService
 
             return list;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getTransactionReport by user");
             throw Timeout();
@@ -772,7 +777,7 @@ public class ReportService : IReportService
 
             return result;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in GetTransactionUserSummaryReport");
             throw Timeout();
@@ -847,7 +852,7 @@ public class ReportService : IReportService
                 ExpectedCheckoutDate = x.ExpectedCheckoutDate
             }).ToList();
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in getOccupancyReport");
             throw Timeout();
@@ -924,7 +929,7 @@ public class ReportService : IReportService
 
             return result;
         }
-        catch (SqlException ex) when (ex.Number == -2)
+        catch (NpgsqlException ex) when (IsTimeout(ex))
         {
             _logger.LogError(ex, "Timeout in GetAuditTransactionReport");
             throw Timeout();

@@ -49,7 +49,7 @@ public class DonationService : IDonationService
     {
         try
         {
-            var donations = await _context.TblDonations.Where(d => d.BondNo == bondNo).ToListAsync();
+            var donations = await _context.TblDonations.Where(d => d.BondNo.ToLower() == bondNo.ToLower()).ToListAsync();
             return donations.Select(ToDto).ToList();
         }
         catch (Exception ex)
@@ -63,7 +63,7 @@ public class DonationService : IDonationService
     {
         try
         {
-            var occasions = await _context.TblDonationOccations.Where(o => o.BondNo == bondNo).ToListAsync();
+            var occasions = await _context.TblDonationOccations.Where(o => o.BondNo.ToLower() == bondNo.ToLower()).ToListAsync();
             return occasions.Select(ToDto).ToList();
         }
         catch (Exception ex)
@@ -78,14 +78,16 @@ public class DonationService : IDonationService
         try
         {
             string term = searchTerm.Trim();
+            // Lower-cased: SQL Server's collation was case-insensitive; PostgreSQL's is not.
+            string termLower = term.ToLower();
             IQueryable<TblDonar> query = _context.TblDonars;
             query = searchType switch
             {
-                "Name" => query.Where(d => d.Name != null && d.Name.Contains(term)),
+                "Name" => query.Where(d => d.Name != null && d.Name.ToLower().Contains(termLower)),
                 "Phone" => query.Where(d => d.PhoneNo != null && d.PhoneNo.Contains(term)),
                 "Aadhar" => query.Where(d => d.Aadhaar != null && d.Aadhaar.Contains(term)),
-                "PAN" => query.Where(d => d.Pan != null && d.Pan.Contains(term)),
-                _ => query.Where(d => d.Name != null && d.Name.Contains(term)),
+                "PAN" => query.Where(d => d.Pan != null && d.Pan.ToLower().Contains(termLower)),
+                _ => query.Where(d => d.Name != null && d.Name.ToLower().Contains(termLower)),
             };
             var results = await query.OrderByDescending(d => d.DonarId).Take(50).ToListAsync();
             return results.Select(ToDto).ToList();
@@ -101,7 +103,7 @@ public class DonationService : IDonationService
     {
         try
         {
-            return await _context.TblDonations.AnyAsync(d => d.BondNo == bondNo);
+            return await _context.TblDonations.AnyAsync(d => d.BondNo.ToLower() == bondNo.ToLower());
         }
         catch (Exception ex)
         {
@@ -290,14 +292,14 @@ public class DonationService : IDonationService
             using var tx = await _context.Database.BeginTransactionAsync();
             try
             {
-                var existingDonation = await _context.TblDonations.FirstOrDefaultAsync(d => d.BondNo == req.BondNo);
+                var existingDonation = await _context.TblDonations.FirstOrDefaultAsync(d => d.BondNo.ToLower() == req.BondNo.ToLower());
                 if (existingDonation == null)
                 {
                     await tx.RollbackAsync();
                     return new DonationOperationResult(false, "Error: Donation not found for the provided BondNo.");
                 }
 
-                var existingOccasion = await _context.TblDonationOccations.FirstOrDefaultAsync(o => o.BondNo == req.BondNo);
+                var existingOccasion = await _context.TblDonationOccations.FirstOrDefaultAsync(o => o.BondNo.ToLower() == req.BondNo.ToLower());
                 if (existingOccasion == null)
                 {
                     await tx.RollbackAsync();

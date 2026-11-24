@@ -79,7 +79,7 @@ public class AdvanceBookingService : IAdvanceBookingService
             if (!string.IsNullOrWhiteSpace(phone))
                 query = query.Where(a => a.PhoneNo.Contains(phone));
             if (!string.IsNullOrWhiteSpace(name))
-                query = query.Where(a => a.GuestName.Contains(name));
+                query = query.Where(a => a.GuestName.ToLower().Contains(name.ToLower()));
             if (!string.IsNullOrWhiteSpace(aadhaar))
                 query = query.Where(a => a.AadharNo != null && a.AadharNo.Contains(aadhaar));
             if (date.HasValue)

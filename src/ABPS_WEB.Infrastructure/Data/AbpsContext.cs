@@ -158,8 +158,6 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("rawdata");
             entity.Property(e => e.SsmaTimeStamp)
-                .IsRowVersion()
-                .IsConcurrencyToken()
                 .HasColumnName("SSMA_TimeStamp");
             entity.Property(e => e.TeluguMasaId).HasColumnName("TeluguMasaID");
             entity.Property(e => e.TeluguMasam)
@@ -258,8 +256,6 @@ public partial class AbpsContext : DbContext
                 .HasDefaultValue("-")
                 .HasColumnName("rupees");
             entity.Property(e => e.SsmaTimeStamp)
-                .IsRowVersion()
-                .IsConcurrencyToken()
                 .HasColumnName("SSMA_TimeStamp");
             entity.Property(e => e.Tdays)
                 .HasDefaultValue((short)0)
@@ -298,18 +294,16 @@ public partial class AbpsContext : DbContext
                 .HasColumnName("NAMEDON");
             entity.Property(e => e.Phoneno)
                 .HasMaxLength(255)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValueSql("'0'")
                 .HasColumnName("PHONENO");
             entity.Property(e => e.Sda)
                 .HasMaxLength(255)
                 .HasColumnName("SDA");
             entity.Property(e => e.Sno)
                 .HasMaxLength(255)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValueSql("'0'")
                 .HasColumnName("SNO");
             entity.Property(e => e.SsmaTimeStamp)
-                .IsRowVersion()
-                .IsConcurrencyToken()
                 .HasColumnName("SSMA_TimeStamp");
             entity.Property(e => e.T1).HasMaxLength(255);
             entity.Property(e => e.T2).HasMaxLength(255);
@@ -345,8 +339,6 @@ public partial class AbpsContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("REMARKS");
             entity.Property(e => e.SsmaTimeStamp)
-                .IsRowVersion()
-                .IsConcurrencyToken()
                 .HasColumnName("SSMA_TimeStamp");
         });
 
@@ -395,8 +387,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.CountryId).HasColumnName("CountryID");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
             entity.Property(e => e.DonarTypeId).HasColumnName("DonarTypeID");
@@ -416,12 +408,12 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.DonationId).HasColumnName("DonationID");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DonarId).HasColumnName("DonarID");
-            entity.Property(e => e.DonationAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.DonationDate).HasColumnType("datetime");
+            entity.Property(e => e.DonationAmount).HasColumnType("numeric(18,2)");
+            entity.Property(e => e.DonationDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.DonationTypeId).HasColumnName("DonationTypeID");
             entity.Property(e => e.PaymentSubTypeId).HasColumnName("PaymentSubTypeID");
             entity.Property(e => e.PaymentTypeId).HasColumnName("PaymentTypeID");
@@ -444,8 +436,8 @@ public partial class AbpsContext : DbContext
                 .HasColumnName("Anandaanam_DateType");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DateEnglishTelugu)
                 .HasMaxLength(1)
@@ -515,23 +507,23 @@ public partial class AbpsContext : DbContext
 
             entity.Property(e => e.AddonRoomId).HasColumnName("AddonRoomID");
             entity.Property(e => e.AddAdvance)
-                .HasColumnType("decimal(18, 0)")
+                .HasColumnType("numeric(18,0)")
                 .HasColumnName("Add_Advance");
             entity.Property(e => e.AddonBookingDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("AddonBooking_Date");
             entity.Property(e => e.BookingId).HasColumnName("Booking_ID");
             entity.Property(e => e.CreateTimestmap)
-                .HasDefaultValueSql("((0))")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("'1900-01-01 00:00:00'::timestamp without time zone")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Create_Timestmap");
-            entity.Property(e => e.Createdby).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Createdby).HasDefaultValueSql("LOCALTIMESTAMP");
             entity.Property(e => e.TotalAdvance)
-                .HasColumnType("decimal(18, 0)")
+                .HasColumnType("numeric(18,0)")
                 .HasColumnName("Total_Advance");
             entity.Property(e => e.TotalAmount)
-                .HasColumnType("decimal(18, 0)")
+                .HasColumnType("numeric(18,0)")
                 .HasColumnName("Total_Amount");
         });
 
@@ -554,9 +546,9 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.RoomCategoryRtId).HasColumnName("Room_Category_RT_ID");
             entity.Property(e => e.CatId).HasColumnName("Cat_ID");
             entity.Property(e => e.BondNo).HasMaxLength(50).HasColumnName("Bond_No");
-            entity.Property(e => e.RequestedCheckInDate).HasColumnType("datetime").HasColumnName("Requested_CheckIn_Date");
+            entity.Property(e => e.RequestedCheckInDate).HasColumnType("timestamp without time zone").HasColumnName("Requested_CheckIn_Date");
             entity.Property(e => e.RequestedNights).HasDefaultValue(1).HasColumnName("Requested_Nights");
-            entity.Property(e => e.AdvanceDepositAmount).HasColumnType("decimal(18, 2)").HasColumnName("Advance_Deposit_Amount");
+            entity.Property(e => e.AdvanceDepositAmount).HasColumnType("numeric(18,2)").HasColumnName("Advance_Deposit_Amount");
             entity.Property(e => e.PaymentTypeId).HasColumnName("Payment_Type_ID");
             entity.Property(e => e.PaymentSubTypeId).HasColumnName("Payment_SubType_ID");
             entity.Property(e => e.ReferenceNumber).HasMaxLength(100).HasColumnName("Reference_Number");
@@ -564,15 +556,15 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.StatusId).HasDefaultValue(1).HasColumnName("Status_ID");
             entity.Property(e => e.AssignedBookingId).HasColumnName("Assigned_Booking_ID");
             entity.Property(e => e.AssignedBy).HasMaxLength(100).HasColumnName("Assigned_By");
-            entity.Property(e => e.AssignedTimestamp).HasColumnType("datetime").HasColumnName("Assigned_Timestamp");
+            entity.Property(e => e.AssignedTimestamp).HasColumnType("timestamp without time zone").HasColumnName("Assigned_Timestamp");
             entity.Property(e => e.CancelledReason).HasMaxLength(500).HasColumnName("Cancelled_Reason");
             entity.Property(e => e.CreatedBy).HasMaxLength(100).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.ModifiedBy).HasMaxLength(100).HasColumnName("Modified_By");
-            entity.Property(e => e.ModifiedTimestamp).HasColumnType("datetime").HasColumnName("Modified_Timestamp");
+            entity.Property(e => e.ModifiedTimestamp).HasColumnType("timestamp without time zone").HasColumnName("Modified_Timestamp");
         });
 
         modelBuilder.Entity<TblBoardMember>(entity =>
@@ -587,8 +579,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.Email).IsUnicode(false);
             entity.Property(e => e.IsActive)
@@ -612,8 +604,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
         });
 
@@ -640,9 +632,9 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("N");
             entity.Property(e => e.Address).IsUnicode(false);
-            entity.Property(e => e.Advance).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Advance).HasColumnType("numeric(18,2)");
             entity.Property(e => e.BookingDate)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Booking_Date");
             entity.Property(e => e.BookingStatusId)
                 .HasDefaultValue(1)
@@ -650,14 +642,14 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.CatId).HasColumnName("CatID");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DonarId).HasColumnName("DonarID");
             entity.Property(e => e.Dtid).HasColumnName("DTID");
             entity.Property(e => e.NoPeople).HasColumnName("No_People");
             entity.Property(e => e.PhoneNo).HasColumnName("Phone_No");
-            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalAmount).HasColumnType("numeric(18,2)");
         });
 
         modelBuilder.Entity<TblBookingDocument>(entity =>
@@ -684,8 +676,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
         });
 
@@ -704,49 +696,49 @@ public partial class AbpsContext : DbContext
 
             entity.Property(e => e.BookingLedgerId).HasColumnName("BookingLedger_ID");
             entity.Property(e => e.ActualRefundAmount)
-                .HasColumnType("decimal(18, 2)")
+                .HasColumnType("numeric(18,2)")
                 .HasColumnName("Actual_RefundAmount");
             entity.Property(e => e.ActualTotalAmount)
-                .HasColumnType("decimal(18, 2)")
+                .HasColumnType("numeric(18,2)")
                 .HasColumnName("Actual_TotalAmount");
-            entity.Property(e => e.Advance).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Advance).HasColumnType("numeric(18,2)");
             entity.Property(e => e.BookingId).HasColumnName("Booking_Id");
             entity.Property(e => e.CheckinByuser)
                 .IsUnicode(false)
                 .HasColumnName("Checkin_byuser");
             entity.Property(e => e.CheckinDateTime)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Checkin_DateTime");
             entity.Property(e => e.CheckinInsertDatetime)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Checkin_insert_datetime");
             entity.Property(e => e.CheckoutByuser)
                 .IsUnicode(false)
                 .HasColumnName("Checkout_byuser");
             entity.Property(e => e.CheckoutDateTime)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Checkout_DateTime");
             entity.Property(e => e.CheckoutInsertDatetime)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Checkout_insert_datetime");
             entity.Property(e => e.CreatedBy)
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.IntendedRefundAmount)
-                .HasColumnType("decimal(18, 2)")
+                .HasColumnType("numeric(18,2)")
                 .HasColumnName("Intended_RefundAmount");
             entity.Property(e => e.IntendedTotalAmount)
-                .HasColumnType("decimal(18, 2)")
+                .HasColumnType("numeric(18,2)")
                 .HasColumnName("Intended_TotalAmount");
             entity.Property(e => e.ModifiedBy)
                 .IsUnicode(false)
                 .HasColumnName("Modified_By");
             entity.Property(e => e.ModifiedTimestamp)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Modified_Timestamp");
         });
 
@@ -769,7 +761,7 @@ public partial class AbpsContext : DbContext
 
             entity.Property(e => e.BookingRoomId).HasColumnName("Booking_Room_ID");
             entity.Property(e => e.BookingDate)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Booking_Date");
             entity.Property(e => e.BookingId).HasColumnName("Booking_id");
             entity.Property(e => e.BookingStatusId)
@@ -780,19 +772,19 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValue("None");
             entity.Property(e => e.CheckInDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("CheckIn_Date");
             entity.Property(e => e.CheckOutDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("CheckOut_Date");
             entity.Property(e => e.CreatedBy)
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.GroupBooking)
                 .HasMaxLength(1)
@@ -801,10 +793,10 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Modified_By");
             entity.Property(e => e.ModifiedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Modified_Timestamp");
-            entity.Property(e => e.RoomAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.RoomAmount).HasColumnType("numeric(18,2)");
             entity.Property(e => e.RoomId).HasColumnName("Room_ID");
         });
 
@@ -823,8 +815,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.Notes)
                 .HasMaxLength(100)
@@ -844,14 +836,14 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.CancelledRoomId).HasColumnName("Cancelled_Room_ID");
             entity.Property(e => e.BookingId).HasColumnName("Booking_id");
             entity.Property(e => e.CancelationDate)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Cancelation_Date");
             entity.Property(e => e.CreatedBy)
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
         });
 
@@ -869,8 +861,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
         });
 
@@ -885,8 +877,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DistrictId)
                 .ValueGeneratedOnAdd()
@@ -905,8 +897,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.CountryId).HasColumnName("CountryID");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DistrictId).HasColumnName("DistrictID");
             entity.Property(e => e.DonarTypeId).HasColumnName("DonarTypeID");
@@ -929,8 +921,8 @@ public partial class AbpsContext : DbContext
                 .HasColumnName("CODE");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.Days).HasColumnName("DAYS");
             entity.Property(e => e.Donartype).HasColumnName("DONARTYPE");
@@ -952,12 +944,12 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.DonationId).HasColumnName("DonationID");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DonarId).HasColumnName("DonarID");
-            entity.Property(e => e.DonationAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.DonationDate).HasColumnType("datetime");
+            entity.Property(e => e.DonationAmount).HasColumnType("numeric(18,2)");
+            entity.Property(e => e.DonationDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.DonationTypeId).HasColumnName("DonationTypeID");
             entity.Property(e => e.PaymentSubTypeId).HasColumnName("PaymentSubTypeID");
             entity.Property(e => e.PaymentTypeId).HasColumnName("PaymentTypeID");
@@ -980,8 +972,8 @@ public partial class AbpsContext : DbContext
                 .HasColumnName("Anandaanam_DateType");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DateEnglishTelugu)
                 .HasMaxLength(1)
@@ -1006,7 +998,7 @@ public partial class AbpsContext : DbContext
             entity.ToTable("tbl_ErrorLogs");
 
             entity.Property(e => e.ErrorLogId).HasColumnName("ErrorLogID");
-            entity.Property(e => e.LogDate).HasColumnType("datetime");
+            entity.Property(e => e.LogDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.LogLevel).HasMaxLength(50);
             entity.Property(e => e.Logger).HasMaxLength(500);
         });
@@ -1023,17 +1015,17 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("created_by");
             entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_date");
             entity.Property(e => e.Extendeddays).HasColumnName("extendeddays");
             entity.Property(e => e.Newcheckout)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("newcheckout");
             entity.Property(e => e.Precheckout)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("precheckout");
             entity.Property(e => e.Prevnoofdays).HasColumnName("prevnoofdays");
             entity.Property(e => e.Totaldays).HasColumnName("totaldays");
@@ -1049,8 +1041,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.Active).HasMaxLength(1);
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.FloorDescription).HasColumnName("Floor_Description");
         });
@@ -1065,8 +1057,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.OccassionId)
                 .ValueGeneratedOnAdd()
@@ -1085,10 +1077,10 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
-            entity.Property(e => e.LastLoginDateTime).HasColumnType("datetime");
+            entity.Property(e => e.LastLoginDateTime).HasColumnType("timestamp without time zone");
             entity.Property(e => e.OperatorName).IsUnicode(false);
             entity.Property(e => e.Password).IsUnicode(false);
             entity.Property(e => e.Status)
@@ -1107,8 +1099,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.PaymentSubType).IsUnicode(false);
             entity.Property(e => e.PaymentTypeId).HasColumnName("paymentTypeID");
@@ -1125,8 +1117,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.PaymentType).IsUnicode(false);
         });
@@ -1138,15 +1130,15 @@ public partial class AbpsContext : DbContext
             entity.ToTable("tbl_Room");
 
             entity.Property(e => e.RoomId).HasColumnName("Room_ID");
-            entity.Property(e => e.AdvanceAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.AdvanceAmount).HasColumnType("numeric(18,2)");
             entity.Property(e => e.Allowed).HasDefaultValue(1);
             entity.Property(e => e.Beds).HasDefaultValue(1);
             entity.Property(e => e.BookingId).HasColumnName("Booking_ID");
-            entity.Property(e => e.Cost).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Cost).HasColumnType("numeric(18,2)");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.FloorId).HasColumnName("Floor_ID");
             entity.Property(e => e.RoomNo).HasColumnName("Room_No");
@@ -1166,8 +1158,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.BookingId).HasColumnName("Booking_ID");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.FloorId).HasColumnName("Floor_ID");
             entity.Property(e => e.RoomNo).HasColumnName("Room_No");
@@ -1188,8 +1180,8 @@ public partial class AbpsContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.Notes).HasMaxLength(100);
             entity.Property(e => e.RoomStatusDesc)
@@ -1217,8 +1209,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.RoomCategory).HasColumnName("Room_Category");
             entity.Property(e => e.RtCreatedBy).HasColumnName("RT_Created_By");
             entity.Property(e => e.RtCreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("RT_Created_Timestamp");
             entity.Property(e => e.RtDesc).HasColumnName("RT_Desc");
         });
@@ -1241,8 +1233,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.RtBed).HasColumnName("RT_Bed");
             entity.Property(e => e.RtCreatedBy).HasColumnName("RT_Created_By");
             entity.Property(e => e.RtCreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("RT_Created_Timestamp");
             entity.Property(e => e.RtDesc).HasColumnName("RT_Desc");
             entity.Property(e => e.RtPrice).HasColumnName("RT_Price");
@@ -1260,8 +1252,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.NewRoomId).HasColumnName("New_RoomID");
             entity.Property(e => e.OldRoomId).HasColumnName("Old_RoomID");
@@ -1277,8 +1269,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.OccassionId).HasColumnName("OccassionID");
             entity.Property(e => e.Smscontent)
@@ -1302,8 +1294,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DateType)
                 .HasMaxLength(1)
@@ -1315,7 +1307,7 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Phone_no");
             entity.Property(e => e.Smsdate)
-                .HasDefaultValueSql("(getdate())")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
                 .HasColumnName("SMSDate");
             entity.Property(e => e.TMasamId).HasColumnName("T_MasamID");
             entity.Property(e => e.TPaskshamId).HasColumnName("T_PaskshamID");
@@ -1333,8 +1325,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.StateId)
                 .ValueGeneratedOnAdd()
@@ -1352,8 +1344,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.TMasamId)
                 .ValueGeneratedOnAdd()
@@ -1376,8 +1368,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.TPakshamId)
                 .ValueGeneratedOnAdd()
@@ -1400,8 +1392,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.TThidiId)
                 .ValueGeneratedOnAdd()
@@ -1426,18 +1418,18 @@ public partial class AbpsContext : DbContext
             entity.HasIndex(e => e.TransactionDate, "IX_tbl_Transaction_TransactionDate");
 
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
-            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Amount).HasColumnType("numeric(18,2)");
             entity.Property(e => e.BondNo).IsUnicode(false);
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.DonarBookingId).HasColumnName("Donar_Booking_id");
             entity.Property(e => e.PaymentSubTypeId).HasColumnName("PaymentSubTypeID");
             entity.Property(e => e.PaymentTypeId).HasColumnName("PaymentTypeID");
             entity.Property(e => e.TransactionCategoryId).HasColumnName("TransactionCategoryID");
-            entity.Property(e => e.TransactionDate).HasColumnType("datetime");
+            entity.Property(e => e.TransactionDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.TrasactionTypeId).HasColumnName("TrasactionTypeID");
         });
 
@@ -1457,15 +1449,15 @@ public partial class AbpsContext : DbContext
 
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
             entity.Property(e => e.BookingId).HasColumnName("Booking_id");
-            entity.Property(e => e.CheckoutDate).HasColumnType("datetime");
+            entity.Property(e => e.CheckoutDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.CreatedBy).HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
-            entity.Property(e => e.DonationAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.RoomAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.DonationAmount).HasColumnType("numeric(18,2)");
+            entity.Property(e => e.RoomAmount).HasColumnType("numeric(18,2)");
+            entity.Property(e => e.TotalAmount).HasColumnType("numeric(18,2)");
         });
 
         modelBuilder.Entity<TblTrasactionCategoryMaster>(entity =>
@@ -1478,8 +1470,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.TransactionCategory).IsUnicode(false);
             entity.Property(e => e.TrasactionCategoryId)
@@ -1497,8 +1489,8 @@ public partial class AbpsContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.TransactionType).IsUnicode(false);
             entity.Property(e => e.TrasactionTypeId)
@@ -1517,8 +1509,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.UserName).HasMaxLength(100);
             entity.Property(e => e.CreatedBy).HasMaxLength(50);
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone");
             entity.Property(e => e.Email).HasMaxLength(150);
             entity.Property(e => e.IsActive)
                 .HasMaxLength(1)
@@ -1527,8 +1519,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
             entity.Property(e => e.UpdatedBy).HasMaxLength(50);
             entity.Property(e => e.UpdatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone");
             entity.Property(e => e.UserId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("UserID");
@@ -1543,8 +1535,8 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
             entity.Property(e => e.CreatedBy).HasColumnName("created_by");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_timestamp");
         });
 
@@ -1557,19 +1549,31 @@ public partial class AbpsContext : DbContext
             entity.Property(e => e.VacateRoomId).HasColumnName("Vacate_Room_ID");
             entity.Property(e => e.BookingId).HasColumnName("Booking_id");
             entity.Property(e => e.CheckoutDateTime)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Checkout_DateTime");
             entity.Property(e => e.CreatedBy)
                 .IsUnicode(false)
                 .HasColumnName("Created_By");
             entity.Property(e => e.CreatedTimestamp)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .HasColumnType("timestamp without time zone")
                 .HasColumnName("Created_Timestamp");
             entity.Property(e => e.RoomId).HasColumnName("RoomID");
         });
 
         OnModelCreatingPartial(modelBuilder);
+    }
+
+    // PostgreSQL: SQL Server's `datetime` carries no time-zone semantics, so every DateTime maps to
+    // `timestamp without time zone`. Npgsql refuses to write a DateTime whose Kind is Utc into such a
+    // column — and request bodies built with JS `toISOString()` (trailing "Z") deserialize as Utc — so
+    // every value is normalized to Kind=Unspecified, storing the same wall-clock value SQL Server did.
+    // Applies to DateTime? properties too (EF applies non-nullable value-type conventions to Nullable<T>).
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<DateTime>()
+            .HaveColumnType("timestamp without time zone")
+            .HaveConversion<UnspecifiedKindDateTimeConverter>();
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

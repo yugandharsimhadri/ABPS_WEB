@@ -12,7 +12,8 @@ public class AuthService : IAuthService
 
     public async Task<AuthResult> ValidateUserAndGetRoleAsync(string username, string password)
     {
-        var user = await _context.TblUsers.FirstOrDefaultAsync(u => u.UserName == username);
+        // ToLower on both sides: SQL Server's collation was case-insensitive; PostgreSQL's is not.
+        var user = await _context.TblUsers.FirstOrDefaultAsync(u => u.UserName.ToLower() == username.ToLower());
         if (user == null) return new AuthResult(false, null, null);
 
         var (valid, needsUpgrade) = PasswordHasher.Verify(password, user.PasswordHash);

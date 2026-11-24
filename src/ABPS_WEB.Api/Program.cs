@@ -34,9 +34,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AbpsContext>(options =>
-    options.UseSqlServer(
+    options.UseNpgsql(
         builder.Configuration.GetConnectionString("AbpsContext"),
-        sql => sql.CommandTimeout(30)));
+        npgsql => npgsql.CommandTimeout(30)));
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -100,7 +100,7 @@ if (!app.Environment.IsDevelopment())
     // Defaults to trusting only loopback proxies; the tunnel/reverse proxy in front of this
     // API is not loopback, so its known-networks/proxies list must be cleared for the
     // X-Forwarded-* headers it sends to be honored at all.
-    forwardedHeaderOptions.KnownNetworks.Clear();
+    forwardedHeaderOptions.KnownIPNetworks.Clear();
     forwardedHeaderOptions.KnownProxies.Clear();
     app.UseForwardedHeaders(forwardedHeaderOptions);
 }

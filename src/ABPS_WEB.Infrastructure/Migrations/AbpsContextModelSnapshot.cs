@@ -3,8 +3,8 @@ using System;
 using ABPS_WEB.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -17,92 +17,90 @@ namespace ABPS_WEB.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "10.0.15")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("ABPS_WEB.Infrastructure.Data.Models.DumpAnnad", b =>
                 {
                     b.Property<double?>("Amt")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("AMT");
 
                     b.Property<string>("DateType")
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<double?>("Days")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("DAYS");
 
                     b.Property<int?>("EnglishDay")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("EnglishMonth")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("EnglishYear")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<double?>("Id")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("ID");
 
                     b.Property<string>("Name")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("NewBondNo")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("OccassionId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("OccassionID");
 
                     b.Property<string>("ParseStatus")
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Rawdata")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("rawdata");
 
                     b.Property<byte[]>("SsmaTimeStamp")
-                        .IsConcurrencyToken()
                         .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
+                        .HasColumnType("bytea")
                         .HasColumnName("SSMA_TimeStamp");
 
                     b.Property<int?>("TeluguMasaId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TeluguMasaID");
 
                     b.Property<string>("TeluguMasam")
                         .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("TeluguPaksham")
                         .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<int?>("TeluguPakshamid")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("TeluguThidhi")
                         .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<int?>("TeluguThidhiid")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.ToTable("dump_ANNAD", (string)null);
                 });
@@ -110,7 +108,7 @@ namespace ABPS_WEB.Infrastructure.Migrations
             modelBuilder.Entity("ABPS_WEB.Infrastructure.Data.Models.DumpDona", b =>
                 {
                     b.Property<string>("Addressdon")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("ADDRESSDON");
 
                     b.Property<short?>("Alotdays")
@@ -121,14 +119,14 @@ namespace ABPS_WEB.Infrastructure.Migrations
 
                     b.Property<int?>("Amtdon")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(0)
                         .HasColumnName("AMTDON")
                         .HasComment("RECEIVED");
 
                     b.Property<int?>("Amtpaid")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(0)
                         .HasColumnName("AMTPAID")
                         .HasComment("PAYMENT");
@@ -136,133 +134,131 @@ namespace ABPS_WEB.Infrastructure.Migrations
                     b.Property<string>("Bdt")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasDefaultValue("-")
                         .HasColumnName("bdt");
 
                     b.Property<string>("Cash")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasDefaultValue("-")
                         .HasColumnName("cash");
 
                     b.Property<string>("Chdrno")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasDefaultValue("-")
                         .HasColumnName("CHDRNO");
 
                     b.Property<string>("Code")
                         .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)")
+                        .HasColumnType("character varying(2)")
                         .HasColumnName("CODE");
 
                     b.Property<string>("Dateofann")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("DATEOFANN");
 
                     b.Property<DateTime?>("Dateofdon")
                         .ValueGeneratedOnAdd()
                         .HasPrecision(0)
-                        .HasColumnType("datetime2(0)")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValue(new DateTime(2014, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                         .HasColumnName("DATEOFDON");
 
                     b.Property<DateTime?>("Datepaid")
                         .HasPrecision(0)
-                        .HasColumnType("datetime2(0)")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("DATEPAID");
 
                     b.Property<string>("Details")
                         .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasColumnType("character varying(150)")
                         .HasColumnName("DETAILS");
 
                     b.Property<int?>("DonarTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarTypeID");
 
                     b.Property<string>("Donty")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("DONTY");
 
                     b.Property<string>("Gothram")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("GOTHRAM");
 
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Lastvis")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasColumnName("LASTVIS");
 
                     b.Property<string>("Mode")
                         .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)")
+                        .HasColumnType("character varying(2)")
                         .HasColumnName("MODE");
 
                     b.Property<string>("Namedon")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("NAMEDON");
 
                     b.Property<string>("NewBondNo")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Occ")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasDefaultValue("-")
                         .HasColumnName("occ");
 
                     b.Property<string>("Pan")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasDefaultValue("-")
                         .HasColumnName("PAN");
 
                     b.Property<string>("Part")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)")
+                        .HasColumnType("character varying(2)")
                         .HasDefaultValue("F")
                         .HasColumnName("PART");
 
                     b.Property<int?>("Pfno")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(0)
                         .HasColumnName("PFNO");
 
                     b.Property<string>("Place")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("PLACE");
 
                     b.Property<string>("Rupees")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasDefaultValue("-")
                         .HasColumnName("rupees");
 
                     b.Property<byte[]>("SsmaTimeStamp")
-                        .IsConcurrencyToken()
                         .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
+                        .HasColumnType("bytea")
                         .HasColumnName("SSMA_TimeStamp");
 
                     b.Property<short?>("Tdays")
@@ -273,18 +269,18 @@ namespace ABPS_WEB.Infrastructure.Migrations
 
                     b.Property<string>("Userd")
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
+                        .HasColumnType("character varying(10)")
                         .HasColumnName("USERD");
 
                     b.Property<string>("Vcno")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasColumnName("VCNO")
                         .HasComment("VOUCHER NO");
 
                     b.Property<string>("Wsname")
                         .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasColumnType("character varying(150)")
                         .HasColumnName("WSNAME");
 
                     b.ToTable("dump_DONA", (string)null);
@@ -294,67 +290,65 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("Addressdon")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("ADDRESSDON");
 
                     b.Property<double?>("Amtdon")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("AMTDON");
 
                     b.Property<string>("Dateofann")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("DATEOFANN");
 
                     b.Property<double?>("Id")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("ID");
 
                     b.Property<int>("Id1")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ID1");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id1"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id1"));
 
                     b.Property<string>("Namedon")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("NAMEDON");
 
                     b.Property<string>("Phoneno")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("PHONENO")
-                        .HasDefaultValueSql("((0))");
+                        .HasDefaultValueSql("'0'");
 
                     b.Property<string>("Sda")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("SDA");
 
                     b.Property<string>("Sno")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("SNO")
-                        .HasDefaultValueSql("((0))");
+                        .HasDefaultValueSql("'0'");
 
                     b.Property<byte[]>("SsmaTimeStamp")
-                        .IsConcurrencyToken()
                         .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
+                        .HasColumnType("bytea")
                         .HasColumnName("SSMA_TimeStamp");
 
                     b.Property<string>("T1")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("T2")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("character varying(255)");
 
                     b.ToTable("dump_DONASHS", (string)null);
                 });
@@ -364,10 +358,10 @@ namespace ABPS_WEB.Infrastructure.Migrations
                     b.Property<string>("DonationText")
                         .HasMaxLength(200)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<int?>("DonationTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.ToTable("dumpDonationTypeMapping", (string)null);
                 });
@@ -375,37 +369,35 @@ namespace ABPS_WEB.Infrastructure.Migrations
             modelBuilder.Entity("ABPS_WEB.Infrastructure.Data.Models.DumpDonlist", b =>
                 {
                     b.Property<int?>("Amt")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("AMT");
 
                     b.Property<double?>("Days")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("DAYS");
 
                     b.Property<string>("Doname")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("DONAME");
 
                     b.Property<string>("Dtype")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasColumnName("DTYPE");
 
                     b.Property<int?>("Id")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ID");
 
                     b.Property<string>("Remarks")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("REMARKS");
 
                     b.Property<byte[]>("SsmaTimeStamp")
-                        .IsConcurrencyToken()
                         .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
+                        .HasColumnType("bytea")
                         .HasColumnName("SSMA_TimeStamp");
 
                     b.ToTable("dump_DONLIST", (string)null);
@@ -415,33 +407,33 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("Addressdon")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("ADDRESSDON");
 
                     b.Property<string>("Dateofann")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("DATEOFANN");
 
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("Id1")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ID1");
 
                     b.Property<string>("Namedon")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("NAMEDON");
 
                     b.Property<string>("Phoneno")
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("character varying(255)")
                         .HasColumnName("PHONENO");
 
                     b.ToTable("dump_members", (string)null);
@@ -452,10 +444,10 @@ namespace ABPS_WEB.Infrastructure.Migrations
                     b.Property<string>("OccasionText")
                         .HasMaxLength(200)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<int?>("OccasionTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.ToTable("dumpOccasionMapping", (string)null);
                 });
@@ -464,66 +456,66 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("DonarId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonarId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DonarId"));
 
                     b.Property<string>("Aadhaar")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("CountryId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("CountryID");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("DistrictId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DistrictID");
 
                     b.Property<int>("DonarTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarTypeID");
 
                     b.Property<string>("EmailId")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("EmailID");
 
                     b.Property<string>("Gotram")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NewBondNo")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Pan")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("PAN");
 
                     b.Property<string>("PhoneNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("StateId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("StateID");
 
                     b.Property<string>("TeluguName")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Telugu_Name");
 
                     b.HasKey("DonarId");
@@ -535,54 +527,54 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("DonationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonationID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DonationId"));
 
                     b.Property<string>("BondNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("DonarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
                     b.Property<decimal>("DonationAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<DateTime?>("DonationDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("DonationTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonationTypeID");
 
                     b.Property<int?>("PaymentSubTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("PaymentSubTypeID");
 
                     b.Property<int?>("PaymentTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("PaymentTypeID");
 
                     b.Property<int>("RoomDays")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("TransactionDetails")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("TransactionNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("DonationId");
 
@@ -592,7 +584,7 @@ namespace ABPS_WEB.Infrastructure.Migrations
             modelBuilder.Entity("ABPS_WEB.Infrastructure.Data.Models.DumpTblDonationOccation", b =>
                 {
                     b.Property<int>("DonationId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonationID");
 
                     b.Property<DateOnly?>("AnandaanamDate")
@@ -604,70 +596,70 @@ namespace ABPS_WEB.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasDefaultValue("D")
                         .HasColumnName("Anandaanam_DateType");
 
                     b.Property<string>("BondNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("DateEnglishTelugu")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasDefaultValue("E")
                         .HasColumnName("Date_English_Telugu");
 
                     b.Property<int>("DonarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
                     b.Property<int>("DonationOccationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Donation_Occation_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationOccationId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DonationOccationId"));
 
                     b.Property<string>("IntheNameof")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("OcassionId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("OcassionID");
 
                     b.Property<string>("OcassionName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("RoomDays")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("TMasamId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_MasamID");
 
                     b.Property<int?>("TPaskshamId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_PaskshamID");
 
                     b.Property<int?>("TThiduluId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_ThiduluID");
 
                     b.Property<string>("TeluguIntheNameof")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Telugu_IntheNameof");
 
                     b.HasKey("DonationId");
@@ -680,12 +672,12 @@ namespace ABPS_WEB.Infrastructure.Migrations
                     b.Property<string>("MasamCode")
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Variant")
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.ToTable("dumpTeluguMasamMap", (string)null);
                 });
@@ -695,12 +687,12 @@ namespace ABPS_WEB.Infrastructure.Migrations
                     b.Property<string>("ThidhiCode")
                         .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("Variant")
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.ToTable("dumpThidhiMap", (string)null);
                 });
@@ -710,12 +702,12 @@ namespace ABPS_WEB.Infrastructure.Migrations
                     b.Property<string>("PakshamCode")
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Variant")
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.ToTable("PakshamMap", (string)null);
                 });
@@ -724,42 +716,42 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("AddonRoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("AddonRoomID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddonRoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AddonRoomId"));
 
                     b.Property<decimal>("AddAdvance")
-                        .HasColumnType("decimal(18, 0)")
+                        .HasColumnType("numeric(18,0)")
                         .HasColumnName("Add_Advance");
 
                     b.Property<DateTime>("AddonBookingDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("AddonBooking_Date")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_ID");
 
                     b.Property<DateTime>("CreateTimestmap")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Create_Timestmap")
-                        .HasDefaultValueSql("((0))");
+                        .HasDefaultValueSql("'1900-01-01 00:00:00'::timestamp without time zone");
 
                     b.Property<string>("Createdby")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<decimal>("TotalAdvance")
-                        .HasColumnType("decimal(18, 0)")
+                        .HasColumnType("numeric(18,0)")
                         .HasColumnName("Total_Advance");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18, 0)")
+                        .HasColumnType("numeric(18,0)")
                         .HasColumnName("Total_Amount");
 
                     b.HasKey("AddonRoomId");
@@ -773,125 +765,125 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("AdvanceBookingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Advance_Booking_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdvanceBookingId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AdvanceBookingId"));
 
                     b.Property<string>("AadharNo")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasColumnName("Aadhar_No");
 
                     b.Property<string>("Address")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<decimal?>("AdvanceDepositAmount")
-                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("Advance_Deposit_Amount");
 
                     b.Property<int?>("AssignedBookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Assigned_Booking_ID");
 
                     b.Property<string>("AssignedBy")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("Assigned_By");
 
                     b.Property<DateTime?>("AssignedTimestamp")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Assigned_Timestamp");
 
                     b.Property<string>("BondNo")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("Bond_No");
 
                     b.Property<string>("CancelledReason")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
+                        .HasColumnType("character varying(500)")
                         .HasColumnName("Cancelled_Reason");
 
                     b.Property<int?>("CatId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Cat_ID");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("GuestName")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasColumnName("Guest_Name");
 
                     b.Property<string>("ModifiedBy")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("Modified_By");
 
                     b.Property<DateTime?>("ModifiedTimestamp")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Modified_Timestamp");
 
                     b.Property<int>("NoPeople")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("No_People");
 
                     b.Property<int>("NoRoomsRequested")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("No_Rooms_Requested");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<int?>("PaymentSubTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Payment_SubType_ID");
 
                     b.Property<int?>("PaymentTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Payment_Type_ID");
 
                     b.Property<string>("PhoneNo")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasColumnName("Phone_No");
 
                     b.Property<string>("ReferenceNumber")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("Reference_Number");
 
                     b.Property<DateTime>("RequestedCheckInDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Requested_CheckIn_Date");
 
                     b.Property<int>("RequestedNights")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1)
                         .HasColumnName("Requested_Nights");
 
                     b.Property<int?>("RoomCategoryRtId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Room_Category_RT_ID");
 
                     b.Property<int>("StatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1)
                         .HasColumnName("Status_ID");
 
@@ -908,25 +900,25 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("MemberId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("MemberID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MemberId"));
 
                     b.Property<string>("Address")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<DateOnly?>("EffectiveFrom")
                         .HasColumnType("date");
@@ -936,28 +928,28 @@ namespace ABPS_WEB.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("IsActive")
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)");
+                        .HasColumnType("character varying(1)");
 
                     b.Property<string>("MemberName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MemberTname")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("MemberTName");
 
                     b.Property<string>("MemberType")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Phone")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("MemberId");
 
@@ -968,25 +960,25 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("CatId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("CatID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CatId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CatId"));
 
                     b.Property<string>("Category")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.HasKey("CatId")
                         .HasName("PK_tbl_Category");
@@ -998,13 +990,13 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BookingId"));
 
                     b.Property<string>("AadharNo")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Aadhar_No");
 
                     b.Property<string>("AddonRoom")
@@ -1012,76 +1004,76 @@ namespace ABPS_WEB.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasDefaultValue("N");
 
                     b.Property<string>("Address")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<decimal?>("Advance")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<string>("AdvanceBooking")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("BondNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("BookingDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Booking_Date");
 
                     b.Property<int>("BookingStatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1)
                         .HasColumnName("Booking_Status_ID");
 
                     b.Property<int>("CatId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("CatID");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("DonarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
                     b.Property<int>("Dtid")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DTID");
 
                     b.Property<string>("GroupBooking")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("NoOfRooms")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("NoPeople")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("No_People");
 
                     b.Property<string>("PhoneNo")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Phone_No");
 
                     b.Property<decimal?>("TotalAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasKey("BookingId");
 
@@ -1094,46 +1086,46 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("BookingDocumentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("BookingDocumentId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingDocumentId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BookingDocumentId"));
 
                     b.Property<int>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_ID");
 
                     b.Property<string>("ContentType")
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("DocumentType")
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<byte[]>("FileData")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("FileName")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("character varying(255)");
 
                     b.HasKey("BookingDocumentId");
 
@@ -1146,82 +1138,82 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("BookingLedgerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("BookingLedger_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingLedgerId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BookingLedgerId"));
 
                     b.Property<decimal?>("ActualRefundAmount")
-                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("Actual_RefundAmount");
 
                     b.Property<decimal?>("ActualTotalAmount")
-                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("Actual_TotalAmount");
 
                     b.Property<decimal?>("Advance")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int?>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_Id");
 
                     b.Property<string>("CheckinByuser")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Checkin_byuser");
 
                     b.Property<DateTime?>("CheckinDateTime")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Checkin_DateTime");
 
                     b.Property<DateTime?>("CheckinInsertDatetime")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Checkin_insert_datetime");
 
                     b.Property<string>("CheckoutByuser")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Checkout_byuser");
 
                     b.Property<DateTime?>("CheckoutDateTime")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Checkout_DateTime");
 
                     b.Property<DateTime?>("CheckoutInsertDatetime")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Checkout_insert_datetime");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<decimal?>("IntendedRefundAmount")
-                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("Intended_RefundAmount");
 
                     b.Property<decimal?>("IntendedTotalAmount")
-                        .HasColumnType("decimal(18, 2)")
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("Intended_TotalAmount");
 
                     b.Property<string>("ModifiedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Modified_By");
 
                     b.Property<DateTime?>("ModifiedTimestamp")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Modified_Timestamp");
 
                     b.Property<int?>("NoOfDays")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("BookingLedgerId");
 
@@ -1238,22 +1230,22 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("BookingRoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_Room_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingRoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BookingRoomId"));
 
                     b.Property<DateTime?>("BookingDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Booking_Date");
 
                     b.Property<int?>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_id");
 
                     b.Property<int?>("BookingStatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(0)
                         .HasColumnName("BookingStatusID");
 
@@ -1262,53 +1254,53 @@ namespace ABPS_WEB.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasDefaultValue("None");
 
                     b.Property<DateTime?>("CheckInDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("CheckIn_Date")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<DateTime?>("CheckOutDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("CheckOut_Date")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime?>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("GroupBooking")
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)");
+                        .HasColumnType("character varying(1)");
 
                     b.Property<string>("ModifiedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Modified_By");
 
                     b.Property<DateTime?>("ModifiedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Modified_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<decimal?>("RoomAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Room_ID");
 
                     b.HasKey("BookingRoomId");
@@ -1328,38 +1320,38 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("BookingStatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("BookingStatusID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingStatusId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BookingStatusId"));
 
                     b.Property<string>("BookingStatusDesc")
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("StatusCode")
                         .IsRequired()
                         .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(10)")
+                        .HasColumnType("character varying(10)")
                         .HasColumnName("Status_Code");
 
                     b.HasKey("BookingStatusId");
@@ -1371,32 +1363,32 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("CancelledRoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Cancelled_Room_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CancelledRoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CancelledRoomId"));
 
                     b.Property<int?>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_id");
 
                     b.Property<DateTime?>("CancelationDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Cancelation_Date");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("CancelledRoomId");
 
@@ -1407,25 +1399,25 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("CountryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("CountryID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CountryId"));
 
                     b.Property<string>("CountryName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.ToTable("tbl_Country", (string)null);
                 });
@@ -1433,33 +1425,33 @@ namespace ABPS_WEB.Infrastructure.Migrations
             modelBuilder.Entity("ABPS_WEB.Infrastructure.Data.Models.TblDistrict", b =>
                 {
                     b.Property<int>("CountryId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("CountryID");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("DistrictId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DistrictID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DistrictId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DistrictId"));
 
                     b.Property<string>("DistrictName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("StateId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("StateID");
 
                     b.ToTable("tbl_Districts", (string)null);
@@ -1469,62 +1461,62 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("DonarId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonarId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DonarId"));
 
                     b.Property<string>("Aadhaar")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("CountryId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("CountryID");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("DistrictId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DistrictID");
 
                     b.Property<int>("DonarTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarTypeID");
 
                     b.Property<string>("EmailId")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("EmailID");
 
                     b.Property<string>("Gotram")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Pan")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("PAN");
 
                     b.Property<string>("PhoneNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("StateId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("StateID");
 
                     b.Property<string>("TeluguName")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Telugu_Name");
 
                     b.HasKey("DonarId");
@@ -1536,36 +1528,36 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("Dtid")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DTID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dtid"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Dtid"));
 
                     b.Property<int?>("Amount")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("AMOUNT");
 
                     b.Property<string>("Code")
                         .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)")
+                        .HasColumnType("character varying(2)")
                         .HasColumnName("CODE");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int?>("Days")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DAYS");
 
                     b.Property<string>("Donartype")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("DONARTYPE");
 
                     b.HasKey("Dtid")
@@ -1578,54 +1570,54 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("DonationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonationID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DonationId"));
 
                     b.Property<string>("BondNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("DonarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
                     b.Property<decimal>("DonationAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<DateTime?>("DonationDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("DonationTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonationTypeID");
 
                     b.Property<int?>("PaymentSubTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("PaymentSubTypeID");
 
                     b.Property<int?>("PaymentTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("PaymentTypeID");
 
                     b.Property<int>("RoomDays")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("TransactionDetails")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("TransactionNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("DonationId");
 
@@ -1639,7 +1631,7 @@ namespace ABPS_WEB.Infrastructure.Migrations
             modelBuilder.Entity("ABPS_WEB.Infrastructure.Data.Models.TblDonationOccation", b =>
                 {
                     b.Property<int>("DonationId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonationID");
 
                     b.Property<DateOnly?>("AnandaanamDate")
@@ -1651,70 +1643,70 @@ namespace ABPS_WEB.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasDefaultValue("D")
                         .HasColumnName("Anandaanam_DateType");
 
                     b.Property<string>("BondNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("DateEnglishTelugu")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasDefaultValue("E")
                         .HasColumnName("Date_English_Telugu");
 
                     b.Property<int>("DonarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
                     b.Property<int>("DonationOccationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Donation_Occation_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationOccationId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DonationOccationId"));
 
                     b.Property<string>("IntheNameof")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("OcassionId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("OcassionID");
 
                     b.Property<string>("OcassionName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("RoomDays")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("TMasamId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_MasamID");
 
                     b.Property<int?>("TPaskshamId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_PaskshamID");
 
                     b.Property<int?>("TThiduluId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_ThiduluID");
 
                     b.Property<string>("TeluguIntheNameof")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Telugu_IntheNameof");
 
                     b.HasKey("DonationId");
@@ -1726,27 +1718,27 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("ErrorLogId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ErrorLogID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ErrorLogId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ErrorLogId"));
 
                     b.Property<string>("Exception")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("LogDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LogLevel")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Logger")
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("ErrorLogId")
                         .HasName("PK__tbl_Erro__D65247E2AA82BC5A");
@@ -1758,48 +1750,48 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("ExtendRoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ExtendRoom_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExtendRoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ExtendRoomId"));
 
                     b.Property<int>("Bookingid")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("bookingid");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("created_by");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("Extendeddays")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("extendeddays");
 
                     b.Property<DateTime>("Newcheckout")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("newcheckout")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<DateTime>("Precheckout")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("precheckout")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("Prevnoofdays")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("prevnoofdays");
 
                     b.Property<int>("Totaldays")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("totaldays");
 
                     b.HasKey("ExtendRoomId");
@@ -1814,24 +1806,24 @@ namespace ABPS_WEB.Infrastructure.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("Floor_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("FloorId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<short>("FloorId"));
 
                     b.Property<string>("Active")
                         .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("character varying(1)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("FloorDescription")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Floor_Description");
 
                     b.HasKey("FloorId");
@@ -1843,25 +1835,25 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("OccassionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("OccassionID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OccassionId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OccassionId"));
 
                     b.Property<string>("OccassionName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.ToTable("tbl_Occassion_Master", (string)null);
                 });
@@ -1870,37 +1862,37 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("OperatorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("OperatorID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OperatorId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OperatorId"));
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<DateTime?>("LastLoginDateTime")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("OperatorName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)");
+                        .HasColumnType("character varying(1)");
 
                     b.HasKey("OperatorId");
 
@@ -1911,28 +1903,28 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("PaymentSubTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("paymentSubTypeID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentSubTypeId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PaymentSubTypeId"));
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("PaymentSubType")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("paymentTypeID");
 
                     b.HasKey("PaymentSubTypeId");
@@ -1944,25 +1936,25 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("PaymentTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("paymentTypeID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentTypeId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PaymentTypeId"));
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("PaymentType")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("PaymentTypeId");
 
@@ -1973,57 +1965,57 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Room_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomId"));
 
                     b.Property<decimal>("AdvanceAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int>("Allowed")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1);
 
                     b.Property<int>("Beds")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1);
 
                     b.Property<int>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_ID");
 
                     b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int?>("FloorId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Floor_ID");
 
                     b.Property<string>("RoomNo")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Room_No");
 
                     b.Property<int>("RoomStatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1)
                         .HasColumnName("Room_Status_ID");
 
                     b.Property<int?>("RtId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RT_ID");
 
                     b.HasKey("RoomId");
@@ -2035,41 +2027,41 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Room_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomId"));
 
                     b.Property<int>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_ID");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int?>("FloorId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Floor_ID");
 
                     b.Property<string>("RoomNo")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Room_No");
 
                     b.Property<int>("RoomStatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1)
                         .HasColumnName("Room_Status_ID");
 
                     b.Property<int?>("RtId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RT_ID");
 
                     b.HasKey("RoomId")
@@ -2082,36 +2074,36 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("RoomStatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Room_Status_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomStatusId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomStatusId"));
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("RoomStatusDesc")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("Room_Status_Desc");
 
                     b.Property<string>("StatusCode")
                         .IsRequired()
                         .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(10)")
+                        .HasColumnType("character varying(10)")
                         .HasColumnName("Status_Code");
 
                     b.HasKey("RoomStatusId");
@@ -2123,38 +2115,38 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("RtId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RT_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RtId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RtId"));
 
                     b.Property<string>("IsActive")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("char(1)")
+                        .HasColumnType("character(1)")
                         .HasDefaultValue("Y")
                         .HasColumnName("is_active")
                         .IsFixedLength();
 
                     b.Property<string>("RoomCategory")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Room_Category");
 
                     b.Property<string>("RtCreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("RT_Created_By");
 
                     b.Property<DateTime>("RtCreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("RT_Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("RtDesc")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("RT_Desc");
 
                     b.HasKey("RtId");
@@ -2166,45 +2158,45 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("RtId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RT_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RtId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RtId"));
 
                     b.Property<string>("RoomCategory")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasDefaultValue("Normal")
                         .HasColumnName("Room_Category");
 
                     b.Property<string>("RtAc")
                         .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasColumnName("RT_AC");
 
                     b.Property<int?>("RtBed")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RT_Bed");
 
                     b.Property<string>("RtCreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("RT_Created_By");
 
                     b.Property<DateTime>("RtCreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("RT_Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("RtDesc")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("RT_Desc");
 
                     b.Property<int?>("RtPrice")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RT_Price");
 
                     b.HasKey("RtId")
@@ -2217,32 +2209,32 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("ShiftRoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ShiftRoomID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShiftRoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ShiftRoomId"));
 
                     b.Property<int?>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_id");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("NewRoomId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("New_RoomID");
 
                     b.Property<int>("OldRoomId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Old_RoomID");
 
                     b.HasKey("ShiftRoomId");
@@ -2254,30 +2246,30 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int?>("OccassionId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("OccassionID");
 
                     b.Property<string>("Smscontent")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("SMSContent");
 
                     b.Property<int>("SmstemplateId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SMSTemplateID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SmstemplateId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SmstemplateId"));
 
                     b.ToTable("tbl_SMSTemplate", (string)null);
                 });
@@ -2286,68 +2278,68 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("Smsid")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SMSID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Smsid"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Smsid"));
 
                     b.Property<string>("BondNo")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Content")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("DateType")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasDefaultValue("D");
 
                     b.Property<int?>("DonarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DonarID");
 
                     b.Property<int?>("OccasionId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("OccasionID");
 
                     b.Property<string>("PhoneNo")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Phone_no");
 
                     b.Property<DateOnly>("Smsdate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("date")
                         .HasColumnName("SMSDate")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int?>("TMasamId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_MasamID");
 
                     b.Property<int?>("TPaskshamId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_PaskshamID");
 
                     b.Property<int?>("TThiduluId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_ThiduluID");
 
                     b.HasKey("Smsid");
@@ -2358,30 +2350,30 @@ namespace ABPS_WEB.Infrastructure.Migrations
             modelBuilder.Entity("ABPS_WEB.Infrastructure.Data.Models.TblState", b =>
                 {
                     b.Property<int>("CountryId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("CountryID");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("StateId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("StateID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StateId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StateId"));
 
                     b.Property<string>("StateName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.ToTable("tbl_States", (string)null);
                 });
@@ -2390,30 +2382,30 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("TMasamId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_MasamID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TMasamId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TMasamId"));
 
                     b.Property<string>("TMasamName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("T_MasamName");
 
                     b.Property<string>("TMasamNameEnglish")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("T_MasamName_English");
 
                     b.ToTable("tbl_TeluguMasam", (string)null);
@@ -2423,30 +2415,30 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("TPakshamId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_PakshamID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TPakshamId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TPakshamId"));
 
                     b.Property<string>("TPakshamName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("T_PakshamName");
 
                     b.Property<string>("TPakshamNameEnglish")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("T_PakshamName_English");
 
                     b.ToTable("tbl_TeluguPaksham", (string)null);
@@ -2456,30 +2448,30 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("TThidiId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("T_ThidiID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TThidiId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TThidiId"));
 
                     b.Property<string>("TThidiName")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("T_ThidiName");
 
                     b.Property<string>("TThidiNameEnglish")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("T_ThidiName_English");
 
                     b.ToTable("tbl_TeluguThidi", (string)null);
@@ -2489,55 +2481,55 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TransactionID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TransactionId"));
 
                     b.Property<decimal?>("Amount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<string>("BondNo")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int?>("DonarBookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Donar_Booking_id");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("PaymentSubTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("PaymentSubTypeID");
 
                     b.Property<int?>("PaymentTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("PaymentTypeID");
 
                     b.Property<string>("ReferenceNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("TransactionCategoryId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TransactionCategoryID");
 
                     b.Property<DateTime?>("TransactionDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("TrasactionTypeId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TrasactionTypeID");
 
                     b.HasKey("TransactionId");
@@ -2551,42 +2543,42 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TransactionID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TransactionId"));
 
                     b.Property<int?>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_id");
 
                     b.Property<DateTime?>("CheckoutDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<decimal?>("DonationAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int?>("NoofDays")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<decimal?>("RoomAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<decimal?>("TotalAmount")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasKey("TransactionId");
 
@@ -2603,25 +2595,25 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("TransactionCategory")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("TrasactionCategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TrasactionCategoryID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrasactionCategoryId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TrasactionCategoryId"));
 
                     b.ToTable("tbl_TrasactionCategory_Master", (string)null);
                 });
@@ -2630,25 +2622,25 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("TransactionType")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("TrasactionTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TrasactionTypeID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrasactionTypeId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TrasactionTypeId"));
 
                     b.ToTable("tbl_TrasactionType_Master", (string)null);
                 });
@@ -2657,55 +2649,55 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<string>("UserName")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("character varying(150)");
 
                     b.Property<string>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)")
+                        .HasColumnType("character varying(1)")
                         .HasDefaultValue("Y");
 
                     b.Property<string>("MobileNumber")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("character varying(255)");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("UpdatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("UserID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.HasKey("UserName")
                         .HasName("PK__tbl_User__1788CCACCE2CA86A");
@@ -2720,23 +2712,23 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RoleID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("created_by");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("RoleId");
 
@@ -2747,32 +2739,32 @@ namespace ABPS_WEB.Infrastructure.Migrations
                 {
                     b.Property<int>("VacateRoomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Vacate_Room_ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VacateRoomId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VacateRoomId"));
 
                     b.Property<int?>("BookingId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Booking_id");
 
                     b.Property<DateTime?>("CheckoutDateTime")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Checkout_DateTime");
 
                     b.Property<string>("CreatedBy")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("Created_By");
 
                     b.Property<DateTime>("CreatedTimestamp")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("Created_Timestamp")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasDefaultValueSql("LOCALTIMESTAMP");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RoomID");
 
                     b.HasKey("VacateRoomId");

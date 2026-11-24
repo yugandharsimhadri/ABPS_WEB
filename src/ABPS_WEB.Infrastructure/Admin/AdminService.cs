@@ -159,7 +159,7 @@ public class AdminService : IAdminService
 
     public async Task<OperationResult> ValidateAdminCredentialsAsync(string username, string password)
     {
-        var user = await _context.TblUsers.FirstOrDefaultAsync(x => x.UserName == username);
+        var user = await _context.TblUsers.FirstOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
         if (user == null) return new OperationResult(false, "Invalid credentials.");
 
         var (valid, needsUpgrade) = PasswordHasher.Verify(password, user.PasswordHash);

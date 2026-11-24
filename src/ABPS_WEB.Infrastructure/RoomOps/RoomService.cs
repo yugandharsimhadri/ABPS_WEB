@@ -171,7 +171,7 @@ public class RoomService : IRoomService
             var result = await (from d in _context.TblDonars
                                  join dn in _context.TblDonations on d.DonarId equals dn.DonarId
                                  join dt in _context.TblDonarTypeMasters on dn.DonationTypeId equals dt.Dtid
-                                 where dn.BondNo == bondNo
+                                 where dn.BondNo.ToLower() == bondNo.ToLower()
                                  orderby dn.DonationDate descending
                                  select new
                                  {
@@ -194,7 +194,7 @@ public class RoomService : IRoomService
                 from bd in _context.TblBookingDetails
                 join bl in _context.TblBookingLedgers on bd.BookingId equals bl.BookingId
                 join br in _context.TblBookingRooms on bd.BookingId equals br.BookingId
-                where bd.BondNo == bondNo
+                where bd.BondNo.ToLower() == bondNo.ToLower()
                       && bd.BookingDate.HasValue
                       && bd.BookingDate.Value.Year == currentYear
                       && (bd.BookingStatusId == (int)BookingStatus.CheckIn || bd.BookingStatusId == (int)BookingStatus.CheckOut)
@@ -349,11 +349,13 @@ public class RoomService : IRoomService
                 // 2. INSERT BOOKING ROOMS
                 foreach (var room in req.Rooms)
                 {
-                    // UPDLOCK: locks the room row for the rest of this transaction so a
+                    // FOR UPDATE: locks the room row for the rest of this transaction so a
                     // concurrent booking of the same room blocks here and then fails the
                     // availability check below — prevents double-booking with multiple users.
+                    // (PostgreSQL equivalent of SQL Server's WITH (UPDLOCK, ROWLOCK); identifiers
+                    // are quoted because EF creates them case-preserved.)
                     var dbRoom = (await _context.TblRooms
-                        .FromSqlInterpolated($"SELECT * FROM tbl_Room WITH (UPDLOCK, ROWLOCK) WHERE Room_ID = {room.RoomId}")
+                        .FromSqlInterpolated($"SELECT * FROM \"tbl_Room\" WHERE \"Room_ID\" = {room.RoomId} FOR UPDATE")
                         .ToListAsync())
                         .FirstOrDefault();
 
@@ -449,7 +451,7 @@ public class RoomService : IRoomService
                           join bookingdetails in _context.TblBookingDetails on bookingrooms.BookingId equals bookingdetails.BookingId
                           join room in _context.TblRooms on bookingrooms.RoomId equals room.RoomId
                           join bookingstatus in _context.TblBookingStatuses on bookingdetails.BookingStatusId equals bookingstatus.BookingStatusId
-                          where room.RoomNo == roomNo
+                          where room.RoomNo.ToLower() == roomNo.ToLower()
                              && bookingstatus.BookingStatusDesc == "CheckIn"
                              && bookingrooms.BookingStatusId == (int)BookingStatus.CheckIn
                           orderby bookingrooms.BookingRoomId descending
